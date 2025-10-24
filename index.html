@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>happy birthday harikaaa💕</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
@@ -51,18 +50,25 @@
       pointer-events: none;
     }
     #intro-text {
-      font-size: 2.4rem;
+      font-size: 2rem;
       color: white;
       text-shadow: 0 0 15px #eaeaea, 0 2px 5px #ffffff70;
       border-right: 2px solid #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      animation: typing 2.5s steps(45, end) 1s forwards, blink 0.7s step-end infinite alternate;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      text-align: center;
+      max-width: 96vw;
+      white-space: pre-line;
+    }
+    @media (max-width: 600px) {
+      #intro-text {
+        font-size: 1.05rem;
+        max-width: 94vw;
+      }
     }
     @keyframes typing {
       from { width: 0; }
-      to { width: 32ch; } /* set to the length of your message */
+      to { width: 34ch; } /* Set to your actual text length for typewriter effect*/
     }
     @keyframes blink {
       50% { border-color: transparent }
@@ -83,12 +89,54 @@
       font-size: 2rem;
       color: #ffb6c1;
       text-shadow: 0 0 10px #fff2;
+      text-align: center;
+      max-width: 95vw;
+      margin-top: 16px;
     }
     #caption {
       margin-top: 20px;
       font-size: 1.25rem;
       color: #ffb6c1;
       text-shadow: 0 0 10px #27272766;
+      text-align: center;
+    }
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto;
+      max-width: 99vw;
+    }
+    .memory-thumb {
+      box-shadow: 0 2px 12px #0003;
+      border-radius: 12px;
+      width: 110px;
+      height: auto;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      background: #111;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .memory-thumb:hover {
+      transform: scale(1.07);
+      box-shadow: 0 3px 35px #ffd2e1;
+    }
+    @media (max-width: 600px) {
+      #gallery {
+        justify-content: center;
+        gap: 10px;
+      }
+      .memory-thumb {
+        width: 47vw; /* two per row on mobile */
+        max-width: 170px;
+        min-width: 90px;
+      }
+    }
+    #memories {
+      width: 100vw;
+      align-items: center;
     }
   </style>
 </head>
@@ -109,9 +157,7 @@
   <!-- PHASE 3: Memories Slideshow + Music -->
   <div id="memories" class="section hidden">
     <h2>sailing in the same boat from seven years 😚</h2>
-    <div id="gallery">
-      <img id="slideshow" src="" alt="memory" />
-    </div>
+    <div id="gallery"></div>
     <div id="caption"></div>
   </div>
 
@@ -186,7 +232,7 @@
         song.volume = 0.8;
         song.play();
 
-        // Clear previous images if present
+        // Add memory gallery
         const galleryDiv = document.getElementById('gallery');
         galleryDiv.innerHTML = "";
 
@@ -194,11 +240,6 @@
           const img = document.createElement('img');
           img.src = `assets/photos/${file}`;
           img.className = "memory-thumb";
-          img.style.margin = "10px";
-          img.style.width = "170px";
-          img.style.borderRadius = "16px";
-          img.style.transition = "transform 0.3s";
-          img.style.cursor = "pointer";
           img.onclick = function () {
             showPopup(this.src);
           };
@@ -237,7 +278,6 @@
         document.body.appendChild(overlay);
       }
     }
-</script>
-
+  </script>
 </body>
 </html>
